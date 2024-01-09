@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+    <!-- Icon - IconMonster -->
+    <link rel="stylesheet" href="https://cdn.iconmonstr.com/1.3.0/css/iconmonstr-iconic-font.min.css">
+    <!-- Mumble UI -->
+    <link rel="stylesheet" href="{% static 'uikit/styles/uikit.css' %}"/>
+    <!-- Dev Search UI -->
+    <link rel="stylesheet" href="{% static 'styles/app.css' %}"/>
+  
+    <title>Communihire - Connect with Developers!</title>
+
+    <style>
+        /* Custom CSS for the logo */
+        .header__logo img {
+            width: 100px; /* Adjust the width to your desired size */
+            height: auto; /* Maintain aspect ratio */
+            transition: transform 0.3s; /* Add a smooth transition effect on hover */
+        }
+
+        .header__logo img:hover {
+            transform: scale(1.1); /* Increase size on hover (adjust the scale factor as needed) */
+        }
+    </style>
+</head>
+
+<body>
+    {% include 'navbar.html' %}
+
+    {% if messages %}
+        <!-- Commented out previous messages display -->
+        <!--
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        -->
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">
+                            <p>{{ message }}</p>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% block content %}
+
+    {% endblock %}
+</body>
+<script src="{% static 'uikit/app.js' %}"></script>
+</html>

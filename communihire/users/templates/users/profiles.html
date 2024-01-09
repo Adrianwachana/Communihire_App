@@ -1,0 +1,53 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<main class="home">
+    <section class="hero-section text-center">
+        <div class="container container--narrow">
+            <h1 class="header-title" style="font-size: 3rem; font-weight: bold; color: lavender; margin-bottom: 10px;">Communihire</h1>
+            <h2 class="sub-header" style="font-size: 1.5rem; font-weight: normal; color: #666;">Connect with <span>Developers</span></h2>
+            <h2 class="sub-header" style="font-size: 1.5rem; font-weight: normal; color: #666;">from around our community</h2>
+        </div>
+
+        <div class="hero-section__search">
+            <form class="form" action="{% url 'profiles' %}" method="get">
+                <div class="form__field">
+                    <label for="formInput#search" class="sr-only">Search Developers</label>
+                    <input class="input input--text" id="formInput#search" type="text" name="search_query"
+                        placeholder="Search by developer name" />
+                </div>
+
+                <button class="btn btn--primary btn--lg" type="submit">Search</button>
+            </form>
+        </div>
+    </section>
+    <!-- Search Result: DevList -->
+    <section class="devlist">
+        <div class="container">
+            <div class="grid grid--three">
+                {% for profile in profiles %}
+                <div class="column card">
+                    <div class="dev">
+                        <a href="{% url 'user-profile' profile.id %}" class="card__body">
+                            <div class="dev__profile">
+                                <img class="avatar avatar--md" src="{{ profile.profile_image.url }}" alt="{{ profile.name }} " />
+                                <div class="dev__meta">
+                                    <h3>{{ profile.name }}</h3>
+                                    <h5>{{ profile.short_intro|default:"Developer" }}</h5>
+                                </div>
+                            </div>
+                            <p class="dev__info">{{ profile.bio|slice:"150"|default:"No bio available." }}</p>
+                            <div class="dev__skills">
+                                {% for skill in profile.skill_set.all|slice:"5" %}
+                                <span class="tag tag--pill tag--main">{{ skill.name }}</span>
+                                {% endfor %}
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock content %}
